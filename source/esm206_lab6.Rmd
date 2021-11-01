@@ -61,5 +61,57 @@ mwu
 
 If these samples came from populations with the same ranks (medians), then there is a 28% chance that randomly selected samples would have ranks at least as different as those in our samples. This is likely therefore we can retain the null hypothesis. There is no significant differences in the ranks between group 1 and group 2 (statistical summary) (Mann Whitney U test: U(df)= 86, p=0.28).
 
+**make sure when picking which test to use, aligns with what saying to audience** (use same responsible metric-conistent message- either mean or median and stick with it)
 
+## Linear Regression
+
+Simple linear regression (single dependent variable, a single independent variable)
+
+```{r, include=FALSE}
+ggplot(data = penguins, aes(x= flipper_length_mm, y= body_mass_g))+
+  geom_point()+
+  geom_smooth(method = "lm")
+```
+
+
+
+Find a linear regression model using ordinary least squares describing the relationship between fliper length ans body mass for penguins.
+
+3 pieces:
+-What type of model?
+-What is the relationship to model (DV ~ IV(s)
+-Where is the data that's used to create this model?
+
+```{r}
+penguin_lm <- lm(body_mass_g ~ flipper_length_mm, data = penguins)
+
+```
+
+y = mx + b
+
+y- body mass, x - flipper length, 
+
+bodymass = 49.7(flipperlength) + -5780.8
+
+49.7(g/mm) means - slope that relates flipper length to body mass, on average for every one mm increase in flipper length I expect a 49.7 increase in grams in body mass. 
+
+-5780.8 (g) means if penguin had flipper length at zero, then body mass would be -5780.8 grams.
+
+
+### broom packae returns model outputs as tidy data frames
+
+```{r}
+penguin_lm_tidy <- broom::tidy(penguin_lm)
+
+penguin_lm_tidy
+
+broom::glance(penguin_lm) # talk about these things more on Wednesday
+
+```
+
+How can I actually include my model equation in a report?
+
+```{r}
+extract_eq(model = penguin_lm, use_coefs = TRUE) #produces pretty version of equation
+```
 
