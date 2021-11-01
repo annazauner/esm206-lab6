@@ -59,4 +59,7 @@ mwu
 ```
 
 
-If these samples came from populations with the same ranks, then there is a 28% chance that randomly selected samples would have ranks as different as those in our sample. This is likely therefore we can retain the null hypothesis. There is no significant differences in the ranks between group 1 and group 2. 
+If these samples came from populations with the same ranks (medians), then there is a 28% chance that randomly selected samples would have ranks at least as different as those in our samples. This is likely therefore we can retain the null hypothesis. There is no significant differences in the ranks between group 1 and group 2 (statistical summary) (Mann Whitney U test: U(df)= 86, p=0.28).
+
+
+
