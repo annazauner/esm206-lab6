@@ -1,5 +1,5 @@
 ---
-title: "esm206_lab6"
+title: "Week 6- Linear Regression"
 author: "Anna Zauner"
 date: "11/1/2021"
 output: html_document
@@ -7,24 +7,56 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(palmerpenguins)
+library(broom)
+library(equatiomatic)
+
 ```
 
-## R Markdown
+## Example of a rank-based test
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+We'll make our own samples, using a pseudorandom generator.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r}
+set.seed(1414)
+gp_1 <- sample.int(20, size = 15, replace = TRUE)
 
-```{r cars}
-summary(cars)
+set.seed(1424)
+gp_2 <- sample.int(30, size = 15, replace = TRUE)
+
 ```
 
-## Including Plots
+```{r}
+hist(gp_1)
 
-You can also embed plots, for example:
+hist(gp_2)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```
+Try a t-test
+
+```{r}
+t.test(gp_1, gp_2)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+What is the meaning of this p-value? p-value- 0.1982
+
+If the two sample were taken from populations with the same mean, then there is a 19.8% chance that we would have found the means are at least as different as those selected in random samples. This is likely to occur therefore you can accept the null hypotheses. 
+
+Alison's words: If these samples were drawn from population with the same mean, the probability of taking two random samples with means *at least as different* as the sample means we found by random chance (taking into account spread, n) is 19.8%
+
+Retain (fail to reject) the null hypothesis. == there is no significant difference in means between group 1 and 2. Warning: people get weirdly upset if you say accept the null
+
+Now let's compare this outcome to a rank-based test.
+
+## Mann Whitney U unpaired rank-based test
+
+```{r}
+mwu <- wilcox.test(gp_1, gp_2)
+
+mwu
+
+```
+
+
+If these samples came from populations with the same ranks, then there is a 28% chance that randomly selected samples would have ranks as different as those in our sample. This is likely therefore we can retain the null hypothesis. There is no significant differences in the ranks between group 1 and group 2. 
